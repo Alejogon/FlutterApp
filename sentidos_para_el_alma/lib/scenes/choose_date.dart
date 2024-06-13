@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/scenes/know_all.dart';
+import 'package:intl/intl.dart';
 
 class ChooseDate extends StatefulWidget {
   const ChooseDate({super.key});
@@ -10,6 +11,8 @@ class ChooseDate extends StatefulWidget {
 }
 
 class _chooseDateState extends State<ChooseDate> {
+  final df = DateFormat('dd-MM-yyyy');
+
   //* Campo para ingresar nombre*/
   late TextEditingController controlador;
   String text = '';
@@ -26,7 +29,11 @@ class _chooseDateState extends State<ChooseDate> {
   }
 
   //*Formulario para ingresar fecha de nacimiento*/
-  DateTime _dateTime = DateTime.now();
+  DateTime _fecha = DateTime.now();
+  String year = '';
+  String month = '';
+  String day = '';
+
   void _showDatePicker() {
     showDatePicker(
       context: context,
@@ -35,7 +42,10 @@ class _chooseDateState extends State<ChooseDate> {
       lastDate: DateTime.now(),
     ).then((value) {
       setState(() {
-        _dateTime = value!;
+        _fecha = value!;
+        year = getYear(_fecha);
+        month = getMonth(_fecha);
+        day = getDay(_fecha);
       });
     });
   }
@@ -158,7 +168,7 @@ class _chooseDateState extends State<ChooseDate> {
               //*Imprime los valores registrador por el usuario
               Column(children: [
                 Text('Nombre: $text'),
-                Text('Fecha seleccionada: $_dateTime'),
+                Text('Fecha seleccionada: $year - $month - $day'),
                 Text('Hora seleccionada: $hora'),
               ]),
 
@@ -166,5 +176,29 @@ class _chooseDateState extends State<ChooseDate> {
             ],
           ),
         ));
+  }
+}
+
+//obtener datos de la fecha
+String getYear(DateTime date) {
+  int year = date.year;
+  return year.toString();
+}
+
+String getMonth(DateTime date) {
+  int month = date.month;
+  if (month >= 10) {
+    return month.toString();
+  } else {
+    return '0$month';
+  }
+}
+
+String getDay(DateTime date) {
+  int day = date.day;
+  if (day >= 10) {
+    return day.toString();
+  } else {
+    return '0$day';
   }
 }

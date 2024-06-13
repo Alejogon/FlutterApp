@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:sentidos_para_el_alma/scenes/config/infrastructure/models/horoscopo.dart';
 import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/scenes/choose_date.dart';
 
-class KnowAll extends StatelessWidget {
+class KnowAll extends StatefulWidget {
   const KnowAll({super.key});
 
   @override
+  State<KnowAll> createState() => _KnowAllState();
+}
+
+class _KnowAllState extends State<KnowAll> {
+  Horoscopo? _horoscopo;
+
+  @override
+  void initState() {
+    super.initState();
+    getHoroscopo();
+  }
+
+  Future<void> getHoroscopo() async {
+    //https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-05-03
+    final response = await Dio().get(
+        'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-04-21');
+    _horoscopo = Horoscopo.fromJson(response.data);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,8 +60,8 @@ class KnowAll extends StatelessWidget {
             ListTile(
               title: const Text('Calcula tu carta astral'),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const ChooseDate()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChooseDate()));
               },
             ),
             ListTile(
@@ -53,13 +75,17 @@ class KnowAll extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: FilledButton(
-          child: const Text('to home'),
-          onPressed: () {
-            Navigator.pop(
-                context, MaterialPageRoute(builder: (context) => const Home()));
-          },
-        ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Padding(
+              padding: const EdgeInsets.all(25),
+              child: Text(
+                _horoscopo?.data.date ?? 'No data',
+                style: const TextStyle(fontSize: 30),
+              )),
+          Padding(
+              padding: const EdgeInsets.all(25),
+              child: Text(_horoscopo?.data.horoscopeData ?? 'No data')),
+        ]),
       ),
     );
   }
