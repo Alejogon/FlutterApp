@@ -23,7 +23,7 @@ class _KnowAllState extends State<KnowAll> {
   Future<void> getHoroscopo() async {
     //https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-05-03
     final response = await Dio().get(
-        'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-04-21');
+        'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-05-03');
     _horoscopo = Horoscopo.fromJson(response.data);
     setState(() {});
   }
