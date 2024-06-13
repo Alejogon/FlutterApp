@@ -18,14 +18,14 @@ class KnowAll extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
               child: Center(
                 child: Text(
                   'Sentidos para el alma',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
               ),
             ),
             ListTile(
@@ -39,7 +39,7 @@ class KnowAll extends StatelessWidget {
               title: const Text('Calcula tu carta astral'),
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ChooseDate()));
+                    MaterialPageRoute(builder: (context) => const ChooseDate()));
               },
             ),
             ListTile(

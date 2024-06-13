@@ -13,21 +13,21 @@ class Home extends StatelessWidget {
           'Sentidos para el alma',
           style: TextStyle(),
         ),
-        backgroundColor: Color.fromARGB(255, 182, 231, 183),
+        backgroundColor: const Color.fromARGB(255, 182, 231, 183),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
               child: Center(
                 child: Text(
                   'Sentidos para el alma',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
               ),
             ),
             ListTile(
@@ -41,7 +41,7 @@ class Home extends StatelessWidget {
               title: const Text('Calcula tu carta astral'),
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ChooseDate()));
+                    MaterialPageRoute(builder: (context) => const ChooseDate()));
               },
             ),
             ListTile(
