@@ -7,19 +7,23 @@ import 'package:sentidos_para_el_alma/scenes/know_all.dart';
 
 class RespuestaApi extends StatefulWidget {
   final String year;
-  const RespuestaApi(this.year, {super.key});
+  final String month;
+  final String day;
+  const RespuestaApi(this.year, this.month, this.day, {super.key});
 
   @override
   State<RespuestaApi> createState() => _RespuestaApiState();
 }
 
 class _RespuestaApiState extends State<RespuestaApi> {
+  String urlBase =
+      'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=';
+  String url =
+      'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-06-14';
   Horoscopo? _horoscopo;
 
   Future<void> getHoroscopo() async {
-    //https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-05-03
-    final response = await Dio().get(
-        'https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=2024-05-03');
+    final response = await Dio().get(url);
     _horoscopo = Horoscopo.fromJson(response.data);
     setState(() {});
   }
@@ -32,6 +36,15 @@ class _RespuestaApiState extends State<RespuestaApi> {
 
   @override
   Widget build(BuildContext context) {
+    String anio = widget.year.toString();
+    String mes = widget.month.toString();
+    String dia = widget.day.toString();
+    List<String> elementosUrl = [urlBase, anio, mes, dia];
+    String urlFinal = elementosUrl.join("-");
+    setState(() {
+      url = urlFinal;
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Conoce los signos'),
@@ -88,7 +101,8 @@ class _RespuestaApiState extends State<RespuestaApi> {
               padding: const EdgeInsets.all(25),
               child: Text(_horoscopo?.data.horoscopeData ?? 'No data')),
           const Text('Respuesta Api '),
-          Text(widget.year)
+          Text('$anio-${widget.month}-${widget.day}'),
+          Text(url),
         ]),
       ),
     );

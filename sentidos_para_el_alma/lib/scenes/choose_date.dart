@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/scenes/know_all.dart';
 import 'package:intl/intl.dart';
+import 'package:sentidos_para_el_alma/scenes/respuesta2.dart';
 import 'package:sentidos_para_el_alma/scenes/respuesta_api.dart';
 
 class ChooseDate extends StatefulWidget {
@@ -54,8 +55,8 @@ class _chooseDateState extends State<ChooseDate> {
   //*Hora de nacimiento
   String hora = '00';
 
-  @override
   Widget build(BuildContext context) {
+    String urlFinal = setFinalUrl(year, month, day);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Calcula tu carta astral'),
@@ -167,16 +168,18 @@ class _chooseDateState extends State<ChooseDate> {
               ),
 
               //*Imprime los valores registrador por el usuario
+
               Column(children: [
                 Text('Nombre: $text'),
                 Text('Fecha seleccionada: $year - $month - $day'),
                 Text('Hora seleccionada: $hora'),
+                Text('urlFinal: $urlFinal'),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => RespuestaApi(year)));
+                              builder: (context) => Respuesta2(urlFinal)));
                     },
                     child: const Text('Enviar')),
               ]),
@@ -210,4 +213,12 @@ String getDay(DateTime date) {
   } else {
     return '0$day';
   }
+}
+
+String setFinalUrl(String anio, String mes, String dia) {
+  const String baseUrl =
+      "https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=";
+  List<String> elementsUrl = [baseUrl, anio, '-', mes, '-', dia];
+  String finalUrl = elementsUrl.join();
+  return finalUrl;
 }
