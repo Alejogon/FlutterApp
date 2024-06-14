@@ -3,15 +3,17 @@ import 'package:dio/dio.dart';
 import 'package:sentidos_para_el_alma/scenes/config/infrastructure/models/horoscopo.dart';
 import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/scenes/choose_date.dart';
+import 'package:sentidos_para_el_alma/scenes/know_all.dart';
 
-class KnowAll extends StatefulWidget {
-  const KnowAll({super.key});
+class RespuestaApi extends StatefulWidget {
+  final String year;
+  const RespuestaApi(this.year, {super.key});
 
   @override
-  State<KnowAll> createState() => _KnowAllState();
+  State<RespuestaApi> createState() => _RespuestaApiState();
 }
 
-class _KnowAllState extends State<KnowAll> {
+class _RespuestaApiState extends State<RespuestaApi> {
   Horoscopo? _horoscopo;
 
   Future<void> getHoroscopo() async {
@@ -85,6 +87,8 @@ class _KnowAllState extends State<KnowAll> {
           Padding(
               padding: const EdgeInsets.all(25),
               child: Text(_horoscopo?.data.horoscopeData ?? 'No data')),
+          const Text('Respuesta Api '),
+          Text(widget.year)
         ]),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/scenes/know_all.dart';
 import 'package:intl/intl.dart';
+import 'package:sentidos_para_el_alma/scenes/respuesta_api.dart';
 
 class ChooseDate extends StatefulWidget {
   const ChooseDate({super.key});
@@ -170,6 +171,14 @@ class _chooseDateState extends State<ChooseDate> {
                 Text('Nombre: $text'),
                 Text('Fecha seleccionada: $year - $month - $day'),
                 Text('Hora seleccionada: $hora'),
+                ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RespuestaApi(year)));
+                    },
+                    child: const Text('Enviar')),
               ]),
 
               //Text('$selectedDate')
