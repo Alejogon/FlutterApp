@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:sentidos_para_el_alma/scenes/config/infrastructure/models/horoscopo.dart';
+import 'package:sentidos_para_el_alma/scenes/home.dart';
+import 'package:sentidos_para_el_alma/scenes/know_all.dart';
+import 'package:sentidos_para_el_alma/scenes/choose_date.dart';
 
 class Respuesta2 extends StatefulWidget {
   final String url;
@@ -31,6 +34,45 @@ class _Respuesta2State extends State<Respuesta2> {
         title: const Text('Tu horoscopo'),
         backgroundColor: const Color.fromARGB(255, 182, 231, 183),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Center(
+                child: Text(
+                  'Sentidos para el alma',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
+            ),
+            ListTile(
+              title: const Text('Sobre nosotros'),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Home()));
+              },
+            ),
+            ListTile(
+              title: const Text('Consulta tu horoscopo'),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChooseDate()));
+              },
+            ),
+            ListTile(
+              title: const Text('Conoce los signos'),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const KnowAll()));
+              },
+            ),
+          ],
+        ),
+      ),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
@@ -40,10 +82,9 @@ class _Respuesta2State extends State<Respuesta2> {
                 style: const TextStyle(fontSize: 30),
               )),
           Padding(
-              padding: const EdgeInsets.all(25),
-              child: Text(_horoscopo?.data.horoscopeData ?? 'No data')),
-          const Text('Respuesta Api '),
-          Text(widget.url),
+              padding: const EdgeInsets.all(40),
+              child: Text(_horoscopo?.data.horoscopeData ?? 'No data',
+                  style: const TextStyle(fontSize: 20))),
         ]),
       ),
     );

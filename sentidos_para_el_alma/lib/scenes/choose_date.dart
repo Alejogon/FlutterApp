@@ -3,7 +3,6 @@ import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/scenes/know_all.dart';
 import 'package:intl/intl.dart';
 import 'package:sentidos_para_el_alma/scenes/respuesta2.dart';
-import 'package:sentidos_para_el_alma/scenes/respuesta_api.dart';
 
 class ChooseDate extends StatefulWidget {
   const ChooseDate({super.key});
@@ -30,7 +29,7 @@ class _chooseDateState extends State<ChooseDate> {
     super.dispose();
   }
 
-  //*Formulario para ingresar fecha de nacimiento*/
+  //*Formulario para ingresar fecha */
   DateTime _fecha = DateTime.now();
   String year = '';
   String month = '';
@@ -40,7 +39,7 @@ class _chooseDateState extends State<ChooseDate> {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(1924),
+      firstDate: DateTime(2024),
       lastDate: DateTime.now(),
     ).then((value) {
       setState(() {
@@ -52,14 +51,15 @@ class _chooseDateState extends State<ChooseDate> {
     });
   }
 
-  //*Hora de nacimiento
-  String hora = '00';
+  //*Signo
+  String signo = '';
 
+  @override
   Widget build(BuildContext context) {
-    String urlFinal = setFinalUrl(year, month, day);
+    String urlFinal = setFinalUrl(signo, year, month, day);
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Calcula tu carta astral'),
+          title: const Text('Consulta tu horoscopo'),
           backgroundColor: const Color.fromARGB(255, 182, 231, 183),
         ),
         drawer: Drawer(
@@ -85,7 +85,7 @@ class _chooseDateState extends State<ChooseDate> {
                 },
               ),
               ListTile(
-                title: const Text('Calcula tu carta astral'),
+                title: const Text('Consulta tu horoscopo'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ChooseDate()));
@@ -105,24 +105,55 @@ class _chooseDateState extends State<ChooseDate> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              //* Campo para ingresar nombre
+              //* Campo para ingresar el signo
+              Column(
+                children: [
+                  const Text(
+                    'Selecciona tu signo',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  DropdownMenu(
+                      dropdownMenuEntries: const <DropdownMenuEntry<String>>[
+                        DropdownMenuEntry(value: 'aries', label: 'Aries'),
+                        DropdownMenuEntry(value: 'taurus', label: 'Tauro'),
+                        DropdownMenuEntry(value: 'gemini', label: 'Géminis'),
+                        DropdownMenuEntry(value: 'cancer', label: 'Cáancer'),
+                        DropdownMenuEntry(value: 'leo', label: 'Leo'),
+                        DropdownMenuEntry(value: 'virgo', label: 'virgo'),
+                        DropdownMenuEntry(value: 'libra', label: 'Libra'),
+                        DropdownMenuEntry(value: 'scorpio', label: 'Escorpión'),
+                        DropdownMenuEntry(
+                            value: 'sagittarius', label: 'Sagitario'),
+                        DropdownMenuEntry(
+                            value: 'capricorn', label: 'Capricornio'),
+                        DropdownMenuEntry(value: 'aquarius', label: 'Acuario'),
+                        DropdownMenuEntry(value: 'pisces', label: 'Piscis'),
+                      ],
+                      onSelected: (value) {
+                        setState(() {
+                          signo = value!;
+                        });
+                      }),
+                ],
+              ),
+              // //* Campo para ingresar nombre
 
-              const Text(
-                'Ingresa tu nombre',
-                style: TextStyle(fontSize: 25),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: TextField(
-                    controller: controlador,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(), labelText: 'Nombre'),
-                    onChanged: (String value) {
-                      setState(() {
-                        text = controlador.text;
-                      });
-                    }),
-              ),
+              // const Text(
+              //   'Ingresa tu nombre',
+              //   style: TextStyle(fontSize: 25),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(25),
+              //   child: TextField(
+              //       controller: controlador,
+              //       decoration: const InputDecoration(
+              //           border: OutlineInputBorder(), labelText: 'Nombre'),
+              //       onChanged: (String value) {
+              //         setState(() {
+              //           text = controlador.text;
+              //         });
+              //       }),
+              // ),
 
               //* Campo para ingresar Fecha de nacimiento
 
@@ -130,50 +161,17 @@ class _chooseDateState extends State<ChooseDate> {
                 onPressed: _showDatePicker,
                 color: Colors.green,
                 child: const Text(
-                  'Selecciona tu fecha de nacimiento',
+                  'Selecciona la fecha',
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 25),
                 ),
               ),
-              //* Campo para ingresar la hora de nacimiento
-              Column(
-                children: [
-                  const Text(
-                    'Selecciona la hora en que naciste',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                  DropdownMenu(
-                      dropdownMenuEntries: const <DropdownMenuEntry<String>>[
-                        DropdownMenuEntry(value: '00', label: '12 am'),
-                        DropdownMenuEntry(value: '02', label: '2 am'),
-                        DropdownMenuEntry(value: '04', label: '4 am'),
-                        DropdownMenuEntry(value: '06', label: '6 am'),
-                        DropdownMenuEntry(value: '08', label: '8 am'),
-                        DropdownMenuEntry(value: '10', label: '10 am'),
-                        DropdownMenuEntry(value: '12', label: '12 m'),
-                        DropdownMenuEntry(value: '14', label: '2 pm'),
-                        DropdownMenuEntry(value: '16', label: '4 pm'),
-                        DropdownMenuEntry(value: '18', label: '6 pm'),
-                        DropdownMenuEntry(value: '20', label: '8 pm'),
-                        DropdownMenuEntry(value: '22', label: '10 pm'),
-                      ],
-                      onSelected: (value) {
-                        setState(() {
-                          hora = value!;
-                        });
-                      }),
-                ],
-              ),
 
-              //*Imprime los valores registrador por el usuario
+              //*Boton enviar
 
               Column(children: [
-                Text('Nombre: $text'),
-                Text('Fecha seleccionada: $year - $month - $day'),
-                Text('Hora seleccionada: $hora'),
-                Text('urlFinal: $urlFinal'),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -183,8 +181,6 @@ class _chooseDateState extends State<ChooseDate> {
                     },
                     child: const Text('Enviar')),
               ]),
-
-              //Text('$selectedDate')
             ],
           ),
         ));
@@ -215,10 +211,19 @@ String getDay(DateTime date) {
   }
 }
 
-String setFinalUrl(String anio, String mes, String dia) {
+String setFinalUrl(String signo, String anio, String mes, String dia) {
   const String baseUrl =
-      "https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=gemini&day=";
-  List<String> elementsUrl = [baseUrl, anio, '-', mes, '-', dia];
+      "https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=";
+  List<String> elementsUrl = [
+    baseUrl,
+    signo,
+    '&day=',
+    anio,
+    '-',
+    mes,
+    '-',
+    dia
+  ];
   String finalUrl = elementsUrl.join();
   return finalUrl;
 }

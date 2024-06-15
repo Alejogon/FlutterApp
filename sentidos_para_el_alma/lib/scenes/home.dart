@@ -38,10 +38,10 @@ class Home extends StatelessWidget {
               },
             ),
             ListTile(
-              title: const Text('Calcula tu carta astral'),
+              title: const Text('Consulta tu horoscopo'),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const ChooseDate()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChooseDate()));
               },
             ),
             ListTile(
@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
               "https://cdn.iconscout.com/icon/premium/png-256-thumb/zodiac-signs-1446948-1222581.png?f=webp"),
         ),
         Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(40),
           child: const Text(
             "La TERAPIA ENERGÉTICA, se basa en el principio de que todo cuanto es, es consciencia o energía en diversas manifestaciones. Considera al ser humano como una unidad de conciencia en evolución, producto de la integración de diferentes campos de energía o niveles: físico, emocional, mental y espiritual y concibe la enfermedad como una consecuencia de la fricción entre estos niveles de consciencia. Eliminar estas fricciones, permitiendo el libre flujo de la energía en el sistema, es uno de los propósitos de la Bioenergética.",
             style: TextStyle(fontSize: 20),

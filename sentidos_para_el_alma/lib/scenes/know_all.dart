@@ -58,7 +58,7 @@ class _KnowAllState extends State<KnowAll> {
                 },
               ),
               ListTile(
-                title: const Text('Calcula tu carta astral'),
+                title: const Text('Consulta tu horoscopo'),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ChooseDate()));
