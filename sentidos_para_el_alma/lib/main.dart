@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sentidos_para_el_alma/scenes/home.dart';
 import 'package:sentidos_para_el_alma/app_theme.dart';
-//import 'package:sentidos_para_el_alma/scenes/know_all.dart';
 
 void main() => runApp(const MyApp());
 
